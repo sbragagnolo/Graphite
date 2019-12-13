@@ -1,3 +1,6 @@
+"
+Graph is an abstract class that implements some general graph behaviour in between the different ways of representation of graphs. 
+"
 Class {
 	#name : #GTEGraph,
 	#superclass : #Object,
@@ -33,14 +36,6 @@ GTEGraph >> arcsFrom: anObject [
 { #category : #'add-remove' }
 GTEGraph >> basicAddOnlyArc: anArc [
 	self subclassResponsibility 
-]
-
-{ #category : #elements }
-GTEGraph >> connect [
-	^ GTEArcImplicitBuilder new
-		  graph: self;
-		  arcClass: GTEDirectedArc;
-		  yourself
 ]
 
 { #category : #accessing }

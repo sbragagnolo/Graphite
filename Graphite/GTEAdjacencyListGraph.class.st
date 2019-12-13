@@ -1,3 +1,7 @@
+"
+The adjasent list implementation has two sets, one for the arcs, other for the nodes. 
+Each arc preservs the relationship in between one and other node. 
+"
 Class {
 	#name : #GTEAdjacencyListGraph,
 	#superclass : #GTEGraph,
