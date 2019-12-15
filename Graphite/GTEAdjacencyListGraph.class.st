@@ -6,16 +6,10 @@ Class {
 	#name : #GTEAdjacencyListGraph,
 	#superclass : #GTEGraph,
 	#instVars : [
-		'nodes',
 		'arcs'
 	],
 	#category : #Graphite
 }
-
-{ #category : #elements }
-GTEAdjacencyListGraph >> addNode: anObject [ 
-	nodes add: anObject
-]
 
 { #category : #elements }
 GTEAdjacencyListGraph >> arcs [
@@ -40,18 +34,13 @@ GTEAdjacencyListGraph >> initialize [
 ]
 
 { #category : #elements }
-GTEAdjacencyListGraph >> nodes [
-	^ nodes 
-]
-
-{ #category : #elements }
 GTEAdjacencyListGraph >> removeArc: aGTEArc [
 	arcs remove: aGTEArc
 ]
 
 { #category : #elements }
-GTEAdjacencyListGraph >> removeNode: anObject [ 
+GTEAdjacencyListGraph >> removeArcsRelatedWith: anObject [
 	arcs := arcs reject: [ : a | a nodes includes: anObject ].
-	nodes remove: anObject.
+
 	
 ]

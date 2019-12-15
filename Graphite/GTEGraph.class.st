@@ -4,6 +4,9 @@ Graph is an abstract class that implements some general graph behaviour in betwe
 Class {
 	#name : #GTEGraph,
 	#superclass : #Object,
+	#instVars : [
+		'nodes'
+	],
 	#category : #Graphite
 }
 
@@ -20,7 +23,7 @@ GTEGraph >> addArc: anArc [
 
 { #category : #'add-remove' }
 GTEGraph >> addNode: anObject [ 
-	self subclassResponsibility 
+	nodes add: anObject
 ]
 
 { #category : #accessing }
@@ -55,7 +58,7 @@ GTEGraph >> isNotEmpty [
 
 { #category : #accessing }
 GTEGraph >> nodes [
-	self subclassResponsibility
+	^ nodes 
 ]
 
 { #category : #accessing }
@@ -79,8 +82,14 @@ GTEGraph >> removeArcNodes: aGTEArc [
 ]
 
 { #category : #'add-remove' }
-GTEGraph >> removeNode: anObject [ 
-	self subclassResponsibility 
+GTEGraph >> removeArcsRelatedWith: anObject [
+	self subclassResponsibility
+]
+
+{ #category : #'add-remove' }
+GTEGraph >> removeNode: anObject [
+	self removeArcsRelatedWith: anObject.
+	nodes remove: anObject
 ]
 
 { #category : #accessing }
