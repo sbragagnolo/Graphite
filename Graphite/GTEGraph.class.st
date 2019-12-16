@@ -73,7 +73,7 @@ GTEGraph >> removeAllNodes: aCollection [
 
 { #category : #'add-remove' }
 GTEGraph >> removeArc: aGTEArc [
-	self subclassResponsibility 
+	aGTEArc unsubscribeFromAdjacencyMatrix: self
 ]
 
 { #category : #'add-remove' }

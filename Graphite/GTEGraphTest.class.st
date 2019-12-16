@@ -15,7 +15,10 @@ Class {
 { #category : #'building suites' }
 GTEGraphTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		  forSelector: #graph addOptions: { GTEAdjacencyMatrixGraph . GTEAdjacencyListGraph  };
+		  forSelector: #graph addOptions: { 
+				  GTEIncidenceMatrixGraph.
+				  GTEAdjacencyMatrixGraph.
+				  GTEAdjacencyListGraph };
 		  yourself
 ]
 

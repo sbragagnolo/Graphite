@@ -23,6 +23,15 @@ GTEArc class >> new: aNumber [
 	^ self error: 'You may use new '.
 ]
 
+{ #category : #creating }
+GTEArc class >> node: anObject coefficient: anInteger node: anObject3 coefficient: anInteger4 [
+	self assert: anInteger == 1.
+	self assert: anInteger4 == 1.
+	^ self nodes: { 
+			  anObject.
+			  anObject3 }
+]
+
 { #category : #'instance creation' }
 GTEArc class >> nodes: anArray [
 	^ self new
@@ -67,4 +76,14 @@ GTEArc >> nodes: anArray [
 	self assert: anArray size = 2.
 	self at: 1 put: (anArray at: 1).
 	self at: 2 put: (anArray at: 2).
+]
+
+{ #category : #subscription }
+GTEArc >> subscribeIntoAdjacencyMatrix: aGTEAdjacencyMatrixGraph [
+	aGTEAdjacencyMatrixGraph subscribeArc: (self at: 1) and: (self at: 2)
+]
+
+{ #category : #unsubscribe }
+GTEArc >> unsubscribeFromAdjacencyMatrix: aGTEAdjacencyMatrixGraph [ 
+	aGTEAdjacencyMatrixGraph unsubscribeArc: (self at: 1) and: (self at: 2)
 ]

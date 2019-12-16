@@ -7,8 +7,80 @@ Class {
 	#category : #Graphite
 }
 
+{ #category : #accessing }
+GTEMatrix >> at: anInteger at: anInteger2 [
+	self ensureMinimalSize: anInteger * anInteger2.
+	^ backend at: anInteger at: anInteger2
+]
+
+{ #category : #accessing }
+GTEMatrix >> at: anInteger at: anInteger2 put: anInteger3 [
+	self ensureMinimalSize: anInteger and: anInteger2.
+	backend at: anInteger at: anInteger2 put: anInteger3
+]
+
+{ #category : #accessing }
+GTEMatrix >> atColumn: anInteger [ 
+	^ backend atColumn: anInteger 
+]
+
+{ #category : #'as yet unclassified' }
+GTEMatrix >> ensureMinimalSize: anInteger [
+	| bkend |
+	backend size <= anInteger ifTrue: [ 
+		bkend := Array2D
+			         rows:( backend numberOfRows * 2) + 1
+			         columns:( backend numberOfColumns * 2 )+ 1
+			         tabulate: [ :i :j | 
+				         (i <= backend numberOfRows and: [ 
+					          j <= backend numberOfColumns ])
+					         ifTrue: [ backend at: i at: j ]
+					         ifFalse: [ 0 ] ].
+		backend := bkend ]
+]
+
+{ #category : #extending }
+GTEMatrix >> ensureMinimalSize: rows and: columns [
+	| bkend |
+	(backend numberOfRows <= rows or: [ 
+		 backend numberOfColumns <= columns ]) ifTrue: [ 
+		bkend := Array2D
+			         rows: (rows * 1.5 + 1) ceiling
+			         columns: (columns * 1.5 + 1) ceiling
+			         tabulate: [ :i :j | 
+				         (i <= backend numberOfRows and: [ 
+					          j <= backend numberOfColumns ])
+					         ifTrue: [ backend at: i at: j ]
+					         ifFalse: [ 0 ] ].
+		backend := bkend ]
+]
+
 { #category : #initialization }
 GTEMatrix >> initialize [
 	super initialize.
 	backend := Array2D rows: 0 columns: 0
+]
+
+{ #category : #accessing }
+GTEMatrix >> nullifyColumn: aColumnNumber [
+	backend
+		atColumn: aColumnNumber
+		put: (ByteArray new: backend numberOfRows)
+]
+
+{ #category : #accessing }
+GTEMatrix >> nullifyRow: aRowNumber [
+	backend
+		atRow: aRowNumber
+		put: (ByteArray new: backend numberOfColumns)
+]
+
+{ #category : #accessing }
+GTEMatrix >> numberOfColumns [
+	^ backend numberOfColumns
+]
+
+{ #category : #accessing }
+GTEMatrix >> numberOfRows [
+	^ backend numberOfRows
 ]
