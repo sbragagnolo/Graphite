@@ -17,13 +17,12 @@ GTEGraph >> addAllNodes: aCollection [
 
 { #category : #'add-remove' }
 GTEGraph >> addArc: anArc [
-	self addAllNodes: anArc nodes.
-	self basicAddOnlyArc: anArc. 
+	self subclassResponsibility .
 ]
 
 { #category : #'add-remove' }
-GTEGraph >> addNode: anObject [ 
-	nodes add: anObject
+GTEGraph >> addNode: anObject [
+	(nodes includes: anObject) ifFalse: [ nodes add: anObject ]
 ]
 
 { #category : #accessing }
@@ -46,6 +45,12 @@ GTEGraph >> elements [
 	^ (self nodes , self arcs) asSet
 ]
 
+{ #category : #accessing }
+GTEGraph >> initialize [
+	super initialize.
+	nodes := OrderedCollection new.
+]
+
 { #category : #testing }
 GTEGraph >> isEmpty [
 	^ self nodes isEmpty 
@@ -64,6 +69,12 @@ GTEGraph >> nodes [
 { #category : #accessing }
 GTEGraph >> nodesFrom: aNode [
 	^ ((self arcsFrom: aNode) collect: [ :arc | arc nodeToFrom: aNode ]) asSet
+]
+
+{ #category : #references }
+GTEGraph >> referenceTo: anObject [ 
+	self addNode: anObject.
+	^ GTERef ref: (nodes indexOf: anObject)
 ]
 
 { #category : #'add-remove' }
@@ -87,9 +98,9 @@ GTEGraph >> removeArcsRelatedWith: anObject [
 ]
 
 { #category : #'add-remove' }
-GTEGraph >> removeNode: anObject [
-	self removeArcsRelatedWith: anObject.
-	nodes remove: anObject
+GTEGraph >> removeNode: aRef [
+	self removeArcsRelatedWith: aRef.
+	nodes removeIndex: aRef ref
 ]
 
 { #category : #accessing }

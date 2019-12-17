@@ -44,7 +44,8 @@ GTEArc >> canGoSomewhereFrom: aNode [
 	| one other |
 	one := self at: 1.
 	other := self at: 2.
-	^ one == aNode or: [ other == aNode ]
+	^ one == aNode or: [ other == aNode ].
+
 ]
 
 { #category : #'as yet unclassified' }

@@ -12,6 +12,11 @@ Class {
 }
 
 { #category : #elements }
+GTEAdjacencyListGraph >> addArc: anArc [
+	arcs add: anArc
+]
+
+{ #category : #elements }
 GTEAdjacencyListGraph >> arcs [
 	^ arcs 
 ]
@@ -22,14 +27,8 @@ GTEAdjacencyListGraph >> arcsFrom: anObject [
 ]
 
 { #category : #elements }
-GTEAdjacencyListGraph >> basicAddOnlyArc: anArc [
-	arcs add: anArc
-]
-
-{ #category : #elements }
 GTEAdjacencyListGraph >> initialize [
 	super initialize.
-	nodes := Set new.
 	arcs := Set new.
 ]
 

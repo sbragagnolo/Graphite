@@ -34,21 +34,18 @@ Class {
 	#category : #Graphite
 }
 
-{ #category : #private }
-GTEAdjacencyMatrixGraph >> addArc: i node: j into: arcs [
-	| inode jnode |
-	inode := nodes at: i.
-	jnode := nodes at: j.
-	arcs add: (GTEArc
-			 node: inode
-			 coefficient: (matrix at: i at: j)
-			 node: jnode
-			 coefficient: (matrix at: j at: i))
+{ #category : #'add-remove' }
+GTEAdjacencyMatrixGraph >> addArc: aGTEArc [
+	aGTEArc subscribeIntoAdjacencyMatrix: self
 ]
 
-{ #category : #'add-remove' }
-GTEAdjacencyMatrixGraph >> addNode: anObject [
-	(nodes includes: anObject) ifFalse: [ super addNode: anObject ]
+{ #category : #private }
+GTEAdjacencyMatrixGraph >> addArc: i node: j into: arcs [
+	arcs add: (GTEArc
+			 node: (GTERef ref: i)
+			 coefficient: (matrix at: i at: j)
+			 node: (GTERef ref: j)
+			 coefficient: (matrix at: j at: i))
 ]
 
 { #category : #accessing }
@@ -76,40 +73,27 @@ GTEAdjacencyMatrixGraph >> arcsFrom: anObject [
 	^ arcs
 ]
 
-{ #category : #'add-remove' }
-GTEAdjacencyMatrixGraph >> basicAddOnlyArc: aGTEArc [
-	aGTEArc subscribeIntoAdjacencyMatrix: self
-]
-
 { #category : #initialization }
 GTEAdjacencyMatrixGraph >> initialize [
 	super initialize.
-	nodes := OrderedCollection new.
 	matrix := GTEMatrix new
 ]
 
 { #category : #private }
 GTEAdjacencyMatrixGraph >> removeArcsRelatedWith: anObject [
-	| oid |
-	oid := nodes indexOf: anObject.
-	matrix nullifyColumn: oid.
-	matrix nullifyRow: oid
+	matrix nullifyColumn: anObject ref.
+	matrix nullifyRow: anObject ref
 ]
 
 { #category : #private }
 GTEAdjacencyMatrixGraph >> subscribeArc: aNode and: anOtherNode [
-	| i j |
-	i := nodes indexOf: aNode.
-	j := nodes indexOf: anOtherNode.
-	matrix at: i at: j put: 1.
-	matrix at: j at: i put: 1
+
+	matrix at: aNode ref at: anOtherNode ref put: 1.
+	matrix at: anOtherNode ref at: aNode ref put: 1
 ]
 
 { #category : #private }
 GTEAdjacencyMatrixGraph >> unsubscribeArc: aNode and: anOtherNode [ 
-	| i j |
-	i := nodes indexOf: aNode.
-	j := nodes indexOf: anOtherNode.
-	matrix at: i at: j put: 0.
-	matrix at: j at: i put: 0
+	matrix at: aNode ref at: anOtherNode ref put: 0.
+	matrix at: anOtherNode ref at: aNode ref put: 0
 ]

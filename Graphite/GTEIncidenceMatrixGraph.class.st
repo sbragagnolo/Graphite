@@ -13,9 +13,9 @@ GTEIncidenceMatrixGraph >> addArc: arcid node: i node: j into: arcs [
 	c1 := matrix at: i at: arcid.
 	c2 := matrix at: j at: arcid.
 	arcs add: (GTEArc
-			 node: i
+			 node: (GTERef ref: i)
 			 coefficient: c1
-			 node: j
+			 node: (GTERef ref: j)
 			 coefficient: c2)
 ]
 
@@ -41,11 +41,10 @@ GTEIncidenceMatrixGraph >> arcs [
 ]
 
 { #category : #private }
-GTEIncidenceMatrixGraph >> arcsFrom: anObject [
-	| arcs oid indexes |
+GTEIncidenceMatrixGraph >> arcsFrom: aRef [
+	| arcs indexes |
 	arcs := Set new.
-	oid := nodes indexOf: anObject.
-	indexes := (matrix atRow: oid) selectIndex: [ :e | e ~= 0 ].
+	indexes := (matrix atRow: aRef ref) selectIndex: [ :e | e ~= 0 ].
 	indexes do: [ :c | 
 		| nodids inode jnode |
 		nodids := (matrix atColumn: c) selectIndex: [ :e | e ~= 0 ].
@@ -63,6 +62,14 @@ GTEIncidenceMatrixGraph >> arcsFrom: anObject [
 ]
 
 { #category : #private }
+GTEIncidenceMatrixGraph >> expandMatrix [
+	|cardinality| 
+	cardinality := matrix numberOfColumns.
+	matrix expandColumns.
+	freeList addAll: (cardinality + 1 to: matrix numberOfColumns)
+]
+
+{ #category : #private }
 GTEIncidenceMatrixGraph >> initialize [
 	super initialize.
 	freeList := OrderedCollection new
@@ -70,38 +77,32 @@ GTEIncidenceMatrixGraph >> initialize [
 
 { #category : #private }
 GTEIncidenceMatrixGraph >> removeArcsRelatedWith: aNode [
-	| inode |
-	inode := nodes indexOf: aNode.
 	1 to: matrix numberOfColumns do: [ :a | 
-		(matrix at: inode at: a) ~= 0 ifTrue: [ 
+		(matrix at: aNode ref at: a) ~= 0 ifTrue: [ 
 			freeList add: a.
 			1 to: matrix numberOfRows do: [ :r | matrix at: r at: a put: 0 ] ] ]
 ]
 
 { #category : #private }
 GTEIncidenceMatrixGraph >> subscribeArc: aNode and: anOtherNode [
-	| column inode jnode |
-	inode := nodes indexOf: aNode.
-	jnode := nodes indexOf: anOtherNode.
-	column := freeList
-		          ifEmpty: [ matrix numberOfColumns + 1 ]
-		          ifNotEmpty: [ freeList removeFirst ].
-	matrix at: inode at: column put: 1.
-	matrix at: jnode at: column put: 1
+	| column  |
 	
+	freeList ifEmpty: [ self expandMatrix ].
+	
+	column := freeList removeFirst.
+	matrix at: aNode ref at: column put: 1.
+	matrix at: anOtherNode ref at: column put: 1
 ]
 
 { #category : #private }
 GTEIncidenceMatrixGraph >> unsubscribeArc: aNode and: anOtherNode [
-	| inode jnode |
-	inode := nodes indexOf: aNode.
-	jnode := nodes indexOf: anOtherNode.
+
 	1 to: matrix numberOfColumns do: [ :a | 
-		((matrix at: inode at: a) ~= 0 and: [ (matrix at: jnode at: a) ~= 0 ]) 
+		((matrix at: aNode ref at: a) ~= 0 and: [ (matrix at: anOtherNode ref at: a) ~= 0 ]) 
 			ifTrue: [ 
 				freeList add: a.
-				matrix at: inode at: a put: 0.
-				matrix at: jnode at: a put: 0 
+				matrix at: aNode ref at: a put: 0.
+				matrix at: anOtherNode ref at: a put: 0 
 			] 
 	]
 ]
