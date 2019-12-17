@@ -87,9 +87,14 @@ GTEAdjacencyMatrixGraph >> removeArcsRelatedWith: anObject [
 
 { #category : #private }
 GTEAdjacencyMatrixGraph >> subscribeArc: aNode and: anOtherNode [
-
 	matrix at: aNode ref at: anOtherNode ref put: 1.
 	matrix at: anOtherNode ref at: aNode ref put: 1
+]
+
+{ #category : #private }
+GTEAdjacencyMatrixGraph >> subscribeDirectedArc: from and: to [
+	matrix at: from ref at: to ref put: 1.
+	matrix at: to ref at: from ref put: -1
 ]
 
 { #category : #private }

@@ -95,6 +95,15 @@ GTEIncidenceMatrixGraph >> subscribeArc: aNode and: anOtherNode [
 ]
 
 { #category : #private }
+GTEIncidenceMatrixGraph >> subscribeDirectedArc: from and: to [
+	| column |
+	freeList ifEmpty: [ self expandMatrix ].
+	column := freeList removeFirst.
+	matrix at: from ref at: column put: 1.
+	matrix at: to ref at: column put: -1
+]
+
+{ #category : #private }
 GTEIncidenceMatrixGraph >> unsubscribeArc: aNode and: anOtherNode [
 
 	1 to: matrix numberOfColumns do: [ :a | 

@@ -24,12 +24,27 @@ GTEArc class >> new: aNumber [
 ]
 
 { #category : #creating }
-GTEArc class >> node: anObject coefficient: anInteger node: anObject3 coefficient: anInteger4 [
-	self assert: anInteger == 1.
-	self assert: anInteger4 == 1.
-	^ self nodes: { 
-			  anObject.
-			  anObject3 }
+GTEArc class >> node: anObject coefficient: aCoefficientForNode node: anObject3 coefficient: aCoefficientForNode2 [
+	| arc |
+	self assert: ({ 1. -1 } includes: aCoefficientForNode).
+	self assert: ({ 1. -1 } includes: aCoefficientForNode2).
+	aCoefficientForNode == aCoefficientForNode2 ifTrue: [ 
+		aCoefficientForNode == 1 ifTrue: [ 
+			^ self nodes: { 
+					  anObject.
+					  anObject3 } ].
+		self error: 'wrong coefficients' ].
+	arc := GTEDirectedArc new.
+	aCoefficientForNode == -1
+		ifTrue: [ 
+			arc
+				from: anObject3;
+				to: anObject ]
+		ifFalse: [ 
+			arc
+				from: anObject;
+				to: anObject3 ].
+	^ arc
 ]
 
 { #category : #'instance creation' }
