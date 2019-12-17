@@ -16,6 +16,11 @@ GTERef class >> ref: anInteger [
 ]
 
 { #category : #accessing }
+GTERef >> readValueFrom: aGraph [
+	^ aGraph nodes at: ref
+]
+
+{ #category : #accessing }
 GTERef >> ref [
 	^ ref
 ]

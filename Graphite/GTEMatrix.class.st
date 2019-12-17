@@ -26,6 +26,11 @@ GTEMatrix >> atColumn: anInteger [
 	^ backend atColumn: anInteger 
 ]
 
+{ #category : #accessin }
+GTEMatrix >> atRow: anInteger [
+	^ backend atRow: anInteger
+]
+
 { #category : #extending }
 GTEMatrix >> ensureMinimalSize: rows and: columns [
 	| bkend |

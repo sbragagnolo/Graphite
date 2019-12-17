@@ -59,8 +59,7 @@ GTEArc >> canGoSomewhereFrom: aNode [
 	| one other |
 	one := self at: 1.
 	other := self at: 2.
-	^ one == aNode or: [ other == aNode ].
-
+	^ one ref = aNode ref or: [ other ref = aNode ref ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -75,7 +74,7 @@ GTEArc >> nodeToFrom: aNode [
 	one := self at: 1.
 	other := self at: 2.
 	self assert: (self canGoSomewhereFrom: aNode).
-	^ one == aNode
+	^ one ref == aNode ref
 		  ifTrue: [ other ]
 		  ifFalse: [ one ]
 ]
@@ -92,6 +91,16 @@ GTEArc >> nodes: anArray [
 	self assert: anArray size = 2.
 	self at: 1 put: (anArray at: 1).
 	self at: 2 put: (anArray at: 2).
+]
+
+{ #category : #subscription }
+GTEArc >> printOn: aStream [
+	aStream
+		nextPutAll: 'Arc( ';
+		nextPutAll: (self at: 1) asString;
+		nextPutAll: ':';
+		nextPutAll: (self at: 2) asString;
+		nextPutAll: ')'
 ]
 
 { #category : #subscription }

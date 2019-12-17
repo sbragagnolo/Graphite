@@ -62,14 +62,13 @@ GTEAdjacencyMatrixGraph >> arcs [
 
 { #category : #accessing }
 GTEAdjacencyMatrixGraph >> arcsFrom: anObject [
-	| arcs oid |
+	| arcs |
 	arcs := Set new.
-	oid := nodes indexOf: anObject.
-	oid = 0 ifTrue: [ ^ arcs ].
+	anObject ref = 0 ifTrue: [ ^ arcs ].
 	1 to: nodes size do: [ :i | 
-		((matrix at: i at: oid) = (matrix at: oid at: i) and: [ 
-			 (matrix at: oid at: i) = 0 ]) ifFalse: [ 
-			self addArc: i node: oid into: arcs ] ].
+		((matrix at: i at: anObject ref) = (matrix at: anObject ref at: i) 
+			 and: [ (matrix at: anObject ref at: i) = 0 ]) ifFalse: [ 
+			self addArc: i node: anObject ref into: arcs ] ].
 	^ arcs
 ]
 

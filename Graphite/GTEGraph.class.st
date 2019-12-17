@@ -25,6 +25,11 @@ GTEGraph >> addNode: anObject [
 	(nodes includes: anObject) ifFalse: [ nodes add: anObject ]
 ]
 
+{ #category : #testing }
+GTEGraph >> adjacent: aRef with: anOther [
+	^ ((self neighbours: aRef) collect: #ref) includes: anOther ref
+]
+
 { #category : #accessing }
 GTEGraph >> arcs [
 	self subclassResponsibility 
@@ -59,6 +64,11 @@ GTEGraph >> isEmpty [
 { #category : #testing }
 GTEGraph >> isNotEmpty [
 	^ self nodes isNotEmpty
+]
+
+{ #category : #testing }
+GTEGraph >> neighbours: aRef [
+	^ (self arcsFrom: aRef) collect: [ :a | a nodeToFrom: aRef ]
 ]
 
 { #category : #accessing }

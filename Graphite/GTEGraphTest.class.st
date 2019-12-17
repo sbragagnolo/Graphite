@@ -34,6 +34,77 @@ GTEGraphTest >> testEmptyGraphHasSize0 [
 ]
 
 { #category : #tests }
+GTEGraphTest >> testNeighbourWithItSelf [
+	| object |
+	object := graph referenceTo: Object new.
+	graph addArc: (GTEArc nodes: { 
+				 object.
+				 object }).
+	self assert: (graph neighbours: object) size equals: 1
+]
+
+{ #category : #tests }
+GTEGraphTest >> testNeighbourWithItSelfIsAdjacent [
+	| object |
+	object := graph referenceTo: Object new.
+	graph addArc: (GTEArc nodes: { 
+				 object.
+				 object }).
+	self assert: (graph adjacent: object with: object)
+]
+
+{ #category : #tests }
+GTEGraphTest >> testNeighbourWithOneOther [
+	| object |
+	object := graph referenceTo: Object new.
+	graph addArc: (GTEArc nodes: { 
+				 object.
+				 (graph referenceTo: Object new) }).
+	self assert: (graph neighbours: object) size equals: 1
+]
+
+{ #category : #tests }
+GTEGraphTest >> testNeighbourWithOneOtherAdjacent [
+	| object oo |
+	object := graph referenceTo: Object new.
+	oo := graph referenceTo: Object new.
+	graph addArc: (GTEArc nodes: { 
+				 object.
+				 oo }).
+	self assert: (graph adjacent: object with: oo)
+]
+
+{ #category : #tests }
+GTEGraphTest >> testNeighbourWithTwoOther [
+	| object |
+	object := graph referenceTo: Object new.
+
+	graph addArc: (GTEArc nodes: { 
+				 object.
+				 (graph referenceTo: Object new) }).
+	graph addArc: (GTEArc nodes: { 
+				 object.
+				 (graph referenceTo: Object new) }).
+	self assert: (graph neighbours: object) size equals: 2
+]
+
+{ #category : #tests }
+GTEGraphTest >> testNeighbourWithTwoOtherAdjacent [
+	| object oo ooo |
+	object := graph referenceTo: Object new.
+	oo := graph referenceTo: Object new.
+	ooo := graph referenceTo: Object new.
+	graph addArc: (GTEArc nodes: { 
+				 object.
+				 oo }).
+	graph addArc: (GTEArc nodes: { 
+				 object.
+				 ooo }).
+	self assert: (graph adjacent: object with: oo).
+	self assert: (graph adjacent: object with: ooo)
+]
+
+{ #category : #tests }
 GTEGraphTest >> testNewGraphAddsANode [
 	graph addNode: Object new.
 	self assert: graph size equals: 1.

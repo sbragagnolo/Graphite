@@ -25,8 +25,18 @@ GTEDirectedArc >> from: value [
 
 { #category : #'instance creation' }
 GTEDirectedArc >> nodeToFrom: aNode [
-	self assert: aNode == self from.
+	self assert: aNode ref == self from ref.
 	^ self to.
+]
+
+{ #category : #'instance creation' }
+GTEDirectedArc >> printOn: aStream [
+	aStream
+		nextPutAll: 'DArc( ';
+		nextPutAll: (self from) asString;
+		nextPutAll: ' => ';
+		nextPutAll: (self to) asString;
+		nextPutAll: ')'
 ]
 
 { #category : #'instance creation' }
