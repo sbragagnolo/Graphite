@@ -1,3 +1,6 @@
+"
+This class looks to normalize all possible backends for our matrixes: Array2D, ByteArray2D, BitArray2D, NBitslengthArray2D
+"
 Class {
 	#name : #GTEMatrix,
 	#superclass : #Object,

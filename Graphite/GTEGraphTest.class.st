@@ -5,22 +5,9 @@ This class contains tests
 "
 Class {
 	#name : #GTEGraphTest,
-	#superclass : #ParametrizedTestCase,
-	#instVars : [
-		'graph'
-	],
+	#superclass : #GTEAbstractGraphTest,
 	#category : #Graphite
 }
-
-{ #category : #'building suites' }
-GTEGraphTest class >> testParameters [
-	^ ParametrizedTestMatrix new
-		  forSelector: #graph addOptions: { 
-				  GTEIncidenceMatrixGraph.
-				  GTEAdjacencyMatrixGraph.
-				  GTEAdjacencyListGraph };
-		  yourself
-]
 
 { #category : #tests }
 GTEGraphTest >> graph: aGraphClass [
@@ -159,7 +146,7 @@ GTEGraphTest >> testNewGraphIsEmpty [
 { #category : #tests }
 GTEGraphTest >> testReferenceGeneratesSucessiveIds [
 	1 to: 1000 do: [ :i | 
-	self assert: (graph referenceTo: Object new) ref equals: i ].
+	self assert: (graph referenceTo: Object new) offset equals: i ].
 	self assert: graph size equals: 1000
 ]
 

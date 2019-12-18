@@ -42,9 +42,9 @@ GTEAdjacencyMatrixGraph >> addArc: aGTEArc [
 { #category : #private }
 GTEAdjacencyMatrixGraph >> addArc: i node: j into: arcs [
 	arcs add: (GTEArc
-			 node: (GTERef ref: i)
+			 node: (GTEInnerReference offset: i)
 			 coefficient: (matrix at: i at: j)
-			 node: (GTERef ref: j)
+			 node: (GTEInnerReference offset: j)
 			 coefficient: (matrix at: j at: i))
 ]
 
@@ -64,11 +64,11 @@ GTEAdjacencyMatrixGraph >> arcs [
 GTEAdjacencyMatrixGraph >> arcsFrom: anObject [
 	| arcs |
 	arcs := Set new.
-	anObject ref = 0 ifTrue: [ ^ arcs ].
+	anObject offset = 0 ifTrue: [ ^ arcs ].
 	1 to: nodes size do: [ :i | 
-		((matrix at: i at: anObject ref) = (matrix at: anObject ref at: i) 
-			 and: [ (matrix at: anObject ref at: i) = 0 ]) ifFalse: [ 
-			self addArc: i node: anObject ref into: arcs ] ].
+		((matrix at: i at: anObject offset) = (matrix at: anObject offset at: i) 
+			 and: [ (matrix at: anObject offset at: i) = 0 ]) ifFalse: [ 
+			self addArc: i node: anObject offset into: arcs ] ].
 	^ arcs
 ]
 
@@ -80,24 +80,24 @@ GTEAdjacencyMatrixGraph >> initialize [
 
 { #category : #private }
 GTEAdjacencyMatrixGraph >> removeArcsRelatedWith: anObject [
-	matrix nullifyColumn: anObject ref.
-	matrix nullifyRow: anObject ref
+	matrix nullifyColumn: anObject offset.
+	matrix nullifyRow: anObject offset
 ]
 
 { #category : #private }
 GTEAdjacencyMatrixGraph >> subscribeArc: aNode and: anOtherNode [
-	matrix at: aNode ref at: anOtherNode ref put: 1.
-	matrix at: anOtherNode ref at: aNode ref put: 1
+	matrix at: aNode offset at: anOtherNode offset put: 1.
+	matrix at: anOtherNode offset at: aNode offset put: 1
 ]
 
 { #category : #private }
 GTEAdjacencyMatrixGraph >> subscribeDirectedArc: from and: to [
-	matrix at: from ref at: to ref put: 1.
-	matrix at: to ref at: from ref put: -1
+	matrix at: from offset at: to offset put: 1.
+	matrix at: to offset at: from offset put: -1
 ]
 
 { #category : #private }
 GTEAdjacencyMatrixGraph >> unsubscribeArc: aNode and: anOtherNode [ 
-	matrix at: aNode ref at: anOtherNode ref put: 0.
-	matrix at: anOtherNode ref at: aNode ref put: 0
+	matrix at: aNode offset at: anOtherNode offset put: 0.
+	matrix at: anOtherNode offset at: aNode offset put: 0
 ]

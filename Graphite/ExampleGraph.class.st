@@ -1,8 +1,12 @@
+"
+This example is just a dummy example that uses a graph for storing values.
+"
 Class {
 	#name : #ExampleGraph,
 	#superclass : #Object,
+	#traits : 'TGraphNode',
+	#classTraits : 'TGraphNode classTrait',
 	#instVars : [
-		'#graph',
 		'#attr => GTESlot'
 	],
 	#category : #Graphite
@@ -21,12 +25,6 @@ ExampleGraph >> attr [
 ]
 
 { #category : #accessing }
-ExampleGraph >> graph [
-	^ graph
-]
-
-{ #category : #accessing }
-ExampleGraph >> graph: aGraph [
-	aGraph addNode: self.
-	graph := aGraph
+ExampleGraph >> attr: anInteger [ 
+	attr := anInteger
 ]

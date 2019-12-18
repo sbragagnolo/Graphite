@@ -10,6 +10,8 @@ Class {
 	#name : #GTEArc,
 	#superclass : #Object,
 	#type : #variable,
+	#traits : 'TEquality',
+	#classTraits : 'TEquality classTrait',
 	#category : #Graphite
 }
 
@@ -28,14 +30,14 @@ GTEArc class >> node: anObject coefficient: aCoefficientForNode node: anObject3 
 	| arc |
 	self assert: ({ 1. -1 } includes: aCoefficientForNode).
 	self assert: ({ 1. -1 } includes: aCoefficientForNode2).
-	aCoefficientForNode == aCoefficientForNode2 ifTrue: [ 
-		aCoefficientForNode == 1 ifTrue: [ 
+	aCoefficientForNode = aCoefficientForNode2 ifTrue: [ 
+		aCoefficientForNode = 1 ifTrue: [ 
 			^ self nodes: { 
 					  anObject.
 					  anObject3 } ].
 		self error: 'wrong coefficients' ].
 	arc := GTEDirectedArc new.
-	aCoefficientForNode == -1
+	aCoefficientForNode = -1
 		ifTrue: [ 
 			arc
 				from: anObject3;
@@ -59,7 +61,19 @@ GTEArc >> canGoSomewhereFrom: aNode [
 	| one other |
 	one := self at: 1.
 	other := self at: 2.
-	^ one ref = aNode ref or: [ other ref = aNode ref ]
+	^ one  = aNode  or: [ other  = aNode  ]
+]
+
+{ #category : #unsubscribe }
+GTEArc >> copyWithReferenceShiftedBy: aNumber [
+	| new |
+	new := self copy.
+	new at: 1 put: ((self at: 1) copy
+			 offset: (self at: 1) offset + aNumber;
+			 yourself).
+	new at: 2 put: ((self at: 2) copy
+			 offset: (self at: 2) offset + aNumber;
+			 yourself)
 ]
 
 { #category : #'as yet unclassified' }
@@ -71,10 +85,12 @@ GTEArc >> initilize [
 { #category : #'as yet unclassified' }
 GTEArc >> nodeToFrom: aNode [
 	| one other |
+	self assert: (self canGoSomewhereFrom: aNode).
+	
 	one := self at: 1.
 	other := self at: 2.
-	self assert: (self canGoSomewhereFrom: aNode).
-	^ one ref == aNode ref
+	
+	^ one = aNode
 		  ifTrue: [ other ]
 		  ifFalse: [ one ]
 ]
@@ -109,6 +125,20 @@ GTEArc >> subscribeIntoAdjacencyMatrix: aGTEAdjacencyMatrixGraph [
 ]
 
 { #category : #unsubscribe }
+GTEArc >> transposed [
+	| t |
+	t := self copy.
+	t at: 1 put: (self at: 2).
+	t at: 2 put: (self at: 1).
+	^ t
+]
+
+{ #category : #unsubscribe }
 GTEArc >> unsubscribeFromAdjacencyMatrix: aGTEAdjacencyMatrixGraph [ 
 	aGTEAdjacencyMatrixGraph unsubscribeArc: (self at: 1) and: (self at: 2)
+]
+
+{ #category : #unsubscribe }
+GTEArc >> valuesToCompareForEquality [
+	^ self nodes
 ]

@@ -14,6 +14,11 @@ Class {
 }
 
 { #category : #'instance creation' }
+GTEDirectedArc >> canGoSomewhereFrom: aNode [
+	^ self from = aNode
+]
+
+{ #category : #'instance creation' }
 GTEDirectedArc >> from [ 
 	^ self at: 2
 ]
@@ -25,7 +30,7 @@ GTEDirectedArc >> from: value [
 
 { #category : #'instance creation' }
 GTEDirectedArc >> nodeToFrom: aNode [
-	self assert: aNode ref == self from ref.
+	self assert: aNode  = self from .
 	^ self to.
 ]
 

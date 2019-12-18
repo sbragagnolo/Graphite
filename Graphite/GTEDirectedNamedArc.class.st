@@ -1,3 +1,7 @@
+"
+A directed named arc is a specific kind of arc that has an attached name.
+This kind of arc is mean to be used with an adjacensy list represntation, since is the only one that stores the arcs. 
+"
 Class {
 	#name : #GTEDirectedNamedArc,
 	#superclass : #GTEDirectedArc,
