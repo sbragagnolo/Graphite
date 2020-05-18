@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'nodes'
 	],
-	#category : #Graphite
+	#category : #'Graphite-Core'
 }
 
 { #category : #'add-remove' }

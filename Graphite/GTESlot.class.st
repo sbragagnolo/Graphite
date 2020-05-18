@@ -4,7 +4,7 @@ The GTESlot is an slot that delegates the referential value to a graph. The grap
 Class {
 	#name : #GTESlot,
 	#superclass : #Slot,
-	#category : #Graphite
+	#category : #'Graphite-Core'
 }
 
 { #category : #'meta-object-protocol' }

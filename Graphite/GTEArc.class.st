@@ -12,7 +12,7 @@ Class {
 	#type : #variable,
 	#traits : 'TEquality',
 	#classTraits : 'TEquality classTrait',
-	#category : #Graphite
+	#category : #'Graphite-Core'
 }
 
 { #category : #'instance creation' }

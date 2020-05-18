@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'backend'
 	],
-	#category : #Graphite
+	#category : #'Graphite-Core'
 }
 
 { #category : #accessing }

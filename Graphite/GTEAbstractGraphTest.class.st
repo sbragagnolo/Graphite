@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'graph'
 	],
-	#category : #Graphite
+	#category : #'Graphite-Test'
 }
 
 { #category : #'building suites' }

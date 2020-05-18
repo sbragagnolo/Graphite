@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'offset'
 	],
-	#category : #Graphite
+	#category : #'Graphite-Core'
 }
 
 { #category : #constructor }

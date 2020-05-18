@@ -31,7 +31,7 @@ Class {
 	#instVars : [
 		'matrix'
 	],
-	#category : #Graphite
+	#category : #'Graphite-Core'
 }
 
 { #category : #'add-remove' }

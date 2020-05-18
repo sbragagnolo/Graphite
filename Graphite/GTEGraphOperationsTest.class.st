@@ -16,7 +16,7 @@ Class {
 		'b',
 		'c'
 	],
-	#category : #Graphite
+	#category : #'Graphite-Test'
 }
 
 { #category : #running }

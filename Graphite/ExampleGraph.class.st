@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'#attr => GTESlot'
 	],
-	#category : #Graphite
+	#category : #'Graphite-Examples'
 }
 
 { #category : #'instance creation' }

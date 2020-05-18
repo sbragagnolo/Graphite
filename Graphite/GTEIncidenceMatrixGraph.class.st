@@ -24,7 +24,7 @@ Class {
 	#instVars : [
 		'freeList'
 	],
-	#category : #Graphite
+	#category : #'Graphite-Core'
 }
 
 { #category : #private }

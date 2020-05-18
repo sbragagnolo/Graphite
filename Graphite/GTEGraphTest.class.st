@@ -6,7 +6,7 @@ This class contains tests
 Class {
 	#name : #GTEGraphTest,
 	#superclass : #GTEAbstractGraphTest,
-	#category : #Graphite
+	#category : #'Graphite-Test'
 }
 
 { #category : #tests }

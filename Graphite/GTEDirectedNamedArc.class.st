@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'name'
 	],
-	#category : #Graphite
+	#category : #'Graphite-Core'
 }
 
 { #category : #accessing }

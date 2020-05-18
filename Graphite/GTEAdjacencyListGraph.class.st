@@ -8,7 +8,7 @@ Class {
 	#instVars : [
 		'arcs'
 	],
-	#category : #Graphite
+	#category : #'Graphite-Core'
 }
 
 { #category : #elements }

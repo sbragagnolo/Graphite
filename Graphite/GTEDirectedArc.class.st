@@ -10,7 +10,7 @@ Class {
 	#name : #GTEDirectedArc,
 	#superclass : #GTEArc,
 	#type : #variable,
-	#category : #Graphite
+	#category : #'Graphite-Core'
 }
 
 { #category : #'instance creation' }
