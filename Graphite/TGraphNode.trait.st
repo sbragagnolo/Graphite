@@ -6,7 +6,7 @@ Trait {
 	#instVars : [
 		'graphVariable'
 	],
-	#category : #'Graphite-Core'
+	#category : #'Graphite-SlotExtention'
 }
 
 { #category : #'as yet unclassified' }

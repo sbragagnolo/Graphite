@@ -7,7 +7,7 @@ Class {
 	#traits : 'TGraphNode',
 	#classTraits : 'TGraphNode classTrait',
 	#instVars : [
-		'#attr => GTESlot'
+		'#attr => GTEReferenceToOne'
 	],
 	#category : #'Graphite-Examples'
 }
