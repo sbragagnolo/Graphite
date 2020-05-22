@@ -6,21 +6,10 @@ Class {
 	#name : #GTEDirectedNamedArc,
 	#superclass : #GTEDirectedArc,
 	#type : #variable,
-	#instVars : [
-		'name'
-	],
+	#traits : 'TNamed',
+	#classTraits : 'TNamed classTrait',
 	#category : #'Graphite-Core'
 }
-
-{ #category : #accessing }
-GTEDirectedNamedArc >> name [ 
-	^ name
-]
-
-{ #category : #accessing }
-GTEDirectedNamedArc >> name: aName [
-	name := aName asSymbol
-]
 
 { #category : #accessing }
 GTEDirectedNamedArc >> printOn: aStream [

@@ -10,29 +10,10 @@ Class {
 	#name : #GTEDirectedArc,
 	#superclass : #GTEArc,
 	#type : #variable,
+	#traits : 'TDirected',
+	#classTraits : 'TDirected classTrait',
 	#category : #'Graphite-Core'
 }
-
-{ #category : #'instance creation' }
-GTEDirectedArc >> canGoSomewhereFrom: aNode [
-	^ self from = aNode
-]
-
-{ #category : #'instance creation' }
-GTEDirectedArc >> from [ 
-	^ self at: 2
-]
-
-{ #category : #'instance creation' }
-GTEDirectedArc >> from: value [ 
-	^ self at: 2 put: value
-]
-
-{ #category : #'instance creation' }
-GTEDirectedArc >> nodeToFrom: aNode [
-	self assert: aNode  = self from .
-	^ self to.
-]
 
 { #category : #'instance creation' }
 GTEDirectedArc >> printOn: aStream [
@@ -42,19 +23,4 @@ GTEDirectedArc >> printOn: aStream [
 		nextPutAll: ' => ';
 		nextPutAll: (self to) asString;
 		nextPutAll: ')'
-]
-
-{ #category : #'instance creation' }
-GTEDirectedArc >> subscribeIntoAdjacencyMatrix: aGTEAdjacencyMatrixGraph [
-	aGTEAdjacencyMatrixGraph subscribeDirectedArc: self from and: self to
-]
-
-{ #category : #'instance creation' }
-GTEDirectedArc >> to [ 
-	^ self at: 1
-]
-
-{ #category : #'instance creation' }
-GTEDirectedArc >> to: value [
-	^ self at: 1 put: value
 ]

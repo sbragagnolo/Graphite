@@ -45,6 +45,12 @@ GTEGraph >> arcsFrom: anObject [
 	^ self subclassResponsibility 
 ]
 
+{ #category : #accessing }
+GTEGraph >> arcsRelating: aNode with: anOtherNode [
+	^ (self arcsFrom: aNode)
+		select: [ :a | a nodes includes: anOtherNode ]
+]
+
 { #category : #'graph operations' }
 GTEGraph >> disjointUnion: anOtherGraph [
 	"https://en.wikipedia.org/wiki/Disjoint_union"
