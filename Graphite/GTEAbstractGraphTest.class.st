@@ -11,13 +11,13 @@ Class {
 GTEAbstractGraphTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		  forSelector: #graph addOptions: { 
-				  GTEIncidenceMatrixGraph.
-				  GTEAdjacencyMatrixGraph.
-				  GTEAdjacencyListGraph };
+				  [GTEIncidenceMatrixGraph new ].
+				 [ GTEAdjacencyMatrixGraph new ].
+				 [ GTEAdjacencyListGraph new ]};
 		  yourself
 ]
 
 { #category : #accessing }
 GTEAbstractGraphTest >> graph: aGraphClass [
-	graph := aGraphClass new 
+	graph := aGraphClass value 
 ]

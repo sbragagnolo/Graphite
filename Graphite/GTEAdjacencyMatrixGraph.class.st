@@ -27,26 +27,9 @@ The general (and default) values representation are
 "
 Class {
 	#name : #GTEAdjacencyMatrixGraph,
-	#superclass : #GTEGraph,
-	#instVars : [
-		'matrix'
-	],
+	#superclass : #GTEAbstractMatrixGraph,
 	#category : #'Graphite-Core'
 }
-
-{ #category : #'add-remove' }
-GTEAdjacencyMatrixGraph >> addArc: aGTEArc [
-	aGTEArc subscribeIntoAdjacencyMatrix: self
-]
-
-{ #category : #private }
-GTEAdjacencyMatrixGraph >> addArc: i node: j into: arcs [
-	arcs add: (GTEArc
-			 node: (GTEInnerReference offset: i)
-			 coefficient: (matrix at: i at: j)
-			 node: (GTEInnerReference offset: j)
-			 coefficient: (matrix at: j at: i))
-]
 
 { #category : #accessing }
 GTEAdjacencyMatrixGraph >> arcs [
@@ -56,7 +39,7 @@ GTEAdjacencyMatrixGraph >> arcs [
 		i to: nodes size do: [ :j | 
 			((matrix at: i at: j) = (matrix at: j at: i) and: [ 
 				 (matrix at: j at: i) = 0 ]) ifFalse: [ 
-				self addArc: i node: j into: arcs ] ] ].
+				self privateAddArc: i node: j into: arcs ] ] ].
 	^ arcs
 ]
 
@@ -68,14 +51,19 @@ GTEAdjacencyMatrixGraph >> arcsFrom: anObject [
 	1 to: nodes size do: [ :i | 
 		((matrix at: i at: anObject offset) = (matrix at: anObject offset at: i) 
 			 and: [ (matrix at: anObject offset at: i) = 0 ]) ifFalse: [ 
-			self addArc: i node: anObject offset into: arcs ] ].
+			self privateAddArc: i node: anObject offset into: arcs ] ].
 	^ arcs
 ]
 
-{ #category : #initialization }
-GTEAdjacencyMatrixGraph >> initialize [
-	super initialize.
-	matrix := GTEMatrix new
+{ #category : #private }
+GTEAdjacencyMatrixGraph >> privateAddArc: i node: j into: arcs [
+	arcs
+		add:
+			(arcResolver
+				node: (GTEInnerReference offset: i)
+				coefficient: (matrix at: i at: j)
+				node: (GTEInnerReference offset: j)
+				coefficient: (matrix at: j at: i))
 ]
 
 { #category : #private }
@@ -85,15 +73,9 @@ GTEAdjacencyMatrixGraph >> removeArcsRelatedWith: anObject [
 ]
 
 { #category : #private }
-GTEAdjacencyMatrixGraph >> subscribeArc: aNode and: anOtherNode [
-	matrix at: aNode offset at: anOtherNode offset put: 1.
-	matrix at: anOtherNode offset at: aNode offset put: 1
-]
-
-{ #category : #private }
-GTEAdjacencyMatrixGraph >> subscribeDirectedArc: from and: to [
-	matrix at: from offset at: to offset put: 1.
-	matrix at: to offset at: from offset put: -1
+GTEAdjacencyMatrixGraph >> subscribeArc: aNode withValue: aNodeValue and: anOtherNode withValue: anOtherNodeValue [
+	matrix at: aNode offset at: anOtherNode offset put: aNodeValue.
+	matrix at: anOtherNode offset at: aNode offset put: anOtherNodeValue
 ]
 
 { #category : #private }

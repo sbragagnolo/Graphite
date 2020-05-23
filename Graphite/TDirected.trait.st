@@ -35,8 +35,22 @@ TDirected >> nodeToFrom: aNode [
 ]
 
 { #category : #'instance creation' }
-TDirected >> subscribeIntoAdjacencyMatrix: aGTEAdjacencyMatrixGraph [
-	aGTEAdjacencyMatrixGraph subscribeDirectedArc: self from and: self to
+TDirected >> privateDirectedFromValue [
+	^ self privateMatricialValueForNode2
+]
+
+{ #category : #'instance creation' }
+TDirected >> privateDirectedToValue [
+	^ self privateMatricialValueForNode1 * -1 
+]
+
+{ #category : #'instance creation' }
+TDirected >> subscribeIntoMatrix: aGTEAdjacencyMatrixGraph [
+	aGTEAdjacencyMatrixGraph
+		subscribeArc: self from
+		withValue: self privateDirectedFromValue
+		and: self to
+		withValue: self privateDirectedToValue
 ]
 
 { #category : #'instance creation' }

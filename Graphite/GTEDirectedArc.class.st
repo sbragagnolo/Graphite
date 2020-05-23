@@ -16,6 +16,21 @@ Class {
 }
 
 { #category : #'instance creation' }
+GTEDirectedArc class >> node: anObject coefficient: aCoefficientForNode node: anObject3 coefficient: aCoefficientForNode2 [
+	| arc |
+	arc := self new.
+	self assert: aCoefficientForNode negated = aCoefficientForNode2.
+	aCoefficientForNode = -1
+		ifTrue: [ arc
+				from: anObject3;
+				to: anObject ]
+		ifFalse: [ arc
+				from: anObject;
+				to: anObject3 ].
+	^ arc
+]
+
+{ #category : #'instance creation' }
 GTEDirectedArc >> printOn: aStream [
 	aStream
 		nextPutAll: 'DArc( ';

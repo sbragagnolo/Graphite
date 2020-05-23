@@ -20,24 +20,12 @@ The general (and default) values representation are
 "
 Class {
 	#name : #GTEIncidenceMatrixGraph,
-	#superclass : #GTEAdjacencyMatrixGraph,
+	#superclass : #GTEAbstractMatrixGraph,
 	#instVars : [
 		'freeList'
 	],
 	#category : #'Graphite-Core'
 }
-
-{ #category : #private }
-GTEIncidenceMatrixGraph >> addArc: arcid node: i node: j into: arcs [
-	| c1 c2 |
-	c1 := matrix at: i at: arcid.
-	c2 := matrix at: j at: arcid.
-	arcs add: (GTEArc
-			 node: (GTEInnerReference offset: i)
-			 coefficient: c1
-			 node: (GTEInnerReference offset: j)
-			 coefficient: c2)
-]
 
 { #category : #private }
 GTEIncidenceMatrixGraph >> arcs [
@@ -53,7 +41,7 @@ GTEIncidenceMatrixGraph >> arcs [
 				         ifTrue: [ indexes at: 2 ]
 				         ifFalse: [ indexes at: 1 ].
 			self
-				addArc: col
+				privateAddArc: col
 				node: inode
 				node: jnode
 				into: arcs ] ].
@@ -74,7 +62,7 @@ GTEIncidenceMatrixGraph >> arcsFrom: aRef [
 			         ifTrue: [ nodids at: 2 ]
 			         ifFalse: [ inode ].
 		self
-			addArc: c
+			privateAddArc: c
 			node: inode
 			node: jnode
 			into: arcs ].
@@ -92,7 +80,20 @@ GTEIncidenceMatrixGraph >> expandMatrix [
 { #category : #private }
 GTEIncidenceMatrixGraph >> initialize [
 	super initialize.
-	freeList := OrderedCollection new
+	freeList := OrderedCollection new.
+
+]
+
+{ #category : #private }
+GTEIncidenceMatrixGraph >> privateAddArc: arcid node: i node: j into: arcs [
+	| c1 c2 |
+	c1 := matrix at: i at: arcid.
+	c2 := matrix at: j at: arcid.
+	arcs add: (arcResolver 
+			 node: (GTEInnerReference offset: i)
+			 coefficient: c1
+			 node: (GTEInnerReference offset: j)
+			 coefficient: c2)
 ]
 
 { #category : #private }
@@ -104,23 +105,12 @@ GTEIncidenceMatrixGraph >> removeArcsRelatedWith: aNode [
 ]
 
 { #category : #private }
-GTEIncidenceMatrixGraph >> subscribeArc: aNode and: anOtherNode [
-	| column  |
-	
-	freeList ifEmpty: [ self expandMatrix ].
-	
-	column := freeList removeFirst.
-	matrix at: aNode offset at: column put: 1.
-	matrix at: anOtherNode offset at: column put: 1
-]
-
-{ #category : #private }
-GTEIncidenceMatrixGraph >> subscribeDirectedArc: from and: to [
+GTEIncidenceMatrixGraph >> subscribeArc: aNode withValue: aNodeValue and: anOtherNode withValue: anOtherNodeValue [
 	| column |
 	freeList ifEmpty: [ self expandMatrix ].
 	column := freeList removeFirst.
-	matrix at: from offset at: column put: 1.
-	matrix at: to offset at: column put: -1
+	matrix at: aNode offset at: column put: aNodeValue.
+	matrix at: anOtherNode offset at: column put: anOtherNodeValue
 ]
 
 { #category : #private }

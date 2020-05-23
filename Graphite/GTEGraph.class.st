@@ -125,7 +125,7 @@ GTEGraph >> removeAllNodes: aCollection [
 
 { #category : #'add-remove' }
 GTEGraph >> removeArc: aGTEArc [
-	aGTEArc unsubscribeFromAdjacencyMatrix: self
+	aGTEArc unsubscribeFromMatrix: self
 ]
 
 { #category : #'add-remove' }
@@ -157,4 +157,19 @@ GTEGraph >> transposed [
 	t addAllNodes: nodes.
 	self arcs do: [ :a | t addArc: a transposed ].
 	^ t
+]
+
+{ #category : #initialization }
+GTEGraph >> useDirectedArcResolver [
+	 " Just for polymorphism "
+]
+
+{ #category : #initialization }
+GTEGraph >> useNonDirectedArcResolver [
+	 " Just for polymorphism "
+]
+
+{ #category : #initialization }
+GTEGraph >> useWeightedArcResolver [
+	 " Just for polymorphism "
 ]

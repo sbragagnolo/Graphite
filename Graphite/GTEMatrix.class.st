@@ -19,9 +19,9 @@ GTEMatrix >> at: anInteger at: anInteger2 [
 ]
 
 { #category : #accessing }
-GTEMatrix >> at: anInteger at: anInteger2 put: anInteger3 [
-	self ensureMinimalSize: anInteger and: anInteger2.
-	backend at: anInteger at: anInteger2 put: anInteger3
+GTEMatrix >> at: rowNumber at: columnNumber put: value [
+	self ensureMinimalSize: rowNumber and: columnNumber.
+	backend at: rowNumber at: columnNumber put: value
 ]
 
 { #category : #accessing }
@@ -39,9 +39,14 @@ GTEMatrix >> ensureMinimalSize: rows and: columns [
 	| bkend |
 	(backend numberOfRows <= rows or: [ 
 		 backend numberOfColumns <= columns ]) ifTrue: [ 
+		| rowsNewSize columnsNewSize |
+		rowsNewSize := (rows * 1.5 + 1) ceiling max:backend numberOfRows.
+		columnsNewSize := (columns * 1.5 + 1) ceiling max:backend numberOfColumns.
+		
+		
 		bkend := Array2D
-			         rows: (rows * 1.5 + 1) ceiling
-			         columns: (columns * 1.5 + 1) ceiling
+			         rows: rowsNewSize
+			         columns:columnsNewSize
 			         tabulate: [ :i :j | 
 				         (i <= backend numberOfRows and: [ 
 					          j <= backend numberOfColumns ])
@@ -85,4 +90,14 @@ GTEMatrix >> numberOfColumns [
 { #category : #accessing }
 GTEMatrix >> numberOfRows [
 	^ backend numberOfRows
+]
+
+{ #category : #accessing }
+GTEMatrix >> printOn: aStream [
+	| reading |
+	reading := backend readStream.
+	[ reading atEnd ]
+		whileFalse: [ aStream
+				nextPutAll:( String tab join: ((reading next: backend numberOfColumns )));
+				nextPutAll: String cr ]
 ]

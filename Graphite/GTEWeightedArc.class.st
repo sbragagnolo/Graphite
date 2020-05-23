@@ -13,6 +13,17 @@ Class {
 	#category : #'Graphite-Core'
 }
 
+{ #category : #'instance creation' }
+GTEWeightedArc class >> node: anObject coefficient: aCoefficientForNode node: anObject2 coefficient: aCoefficientForNode2 [
+	^ (super
+		node: anObject
+		coefficient: aCoefficientForNode
+		node: anObject2
+		coefficient: aCoefficientForNode2)
+		weight: aCoefficientForNode;
+		yourself
+]
+
 { #category : #accessing }
 GTEWeightedArc >> printOn: aStream [
 	aStream

@@ -25,28 +25,13 @@ GTEArc class >> new: aNumber [
 	^ self error: 'You may use new '.
 ]
 
-{ #category : #creating }
-GTEArc class >> node: anObject coefficient: aCoefficientForNode node: anObject3 coefficient: aCoefficientForNode2 [
-	| arc |
-	self assert: ({ 1. -1 } includes: aCoefficientForNode).
-	self assert: ({ 1. -1 } includes: aCoefficientForNode2).
-	aCoefficientForNode = aCoefficientForNode2 ifTrue: [ 
-		aCoefficientForNode = 1 ifTrue: [ 
-			^ self nodes: { 
-					  anObject.
-					  anObject3 } ].
-		self error: 'wrong coefficients' ].
-	arc := GTEDirectedArc new.
-	aCoefficientForNode = -1
-		ifTrue: [ 
-			arc
-				from: anObject3;
-				to: anObject ]
-		ifFalse: [ 
-			arc
-				from: anObject;
-				to: anObject3 ].
-	^ arc
+{ #category : #'instance creation' }
+GTEArc class >> node: anObject coefficient: aCoefficientForNode node: anObject2 coefficient: aCoefficientForNode2 [
+	self assert: aCoefficientForNode = aCoefficientForNode2.
+	^ self
+		nodes:
+			{anObject.
+			anObject2}
 ]
 
 { #category : #'instance creation' }
@@ -120,8 +105,22 @@ GTEArc >> printOn: aStream [
 ]
 
 { #category : #subscription }
-GTEArc >> subscribeIntoAdjacencyMatrix: aGTEAdjacencyMatrixGraph [
-	aGTEAdjacencyMatrixGraph subscribeArc: (self at: 1) and: (self at: 2)
+GTEArc >> privateMatricialValueForNode1 [
+	^ 1 
+]
+
+{ #category : #subscription }
+GTEArc >> privateMatricialValueForNode2 [
+	^ 1
+]
+
+{ #category : #subscription }
+GTEArc >> subscribeIntoMatrix: aGTEAdjacencyMatrixGraph [
+	aGTEAdjacencyMatrixGraph
+		subscribeArc: (self at: 1)
+		withValue: self privateMatricialValueForNode1
+		and: (self at: 2)
+		withValue: self privateMatricialValueForNode2
 ]
 
 { #category : #unsubscribe }
@@ -134,8 +133,10 @@ GTEArc >> transposed [
 ]
 
 { #category : #unsubscribe }
-GTEArc >> unsubscribeFromAdjacencyMatrix: aGTEAdjacencyMatrixGraph [ 
-	aGTEAdjacencyMatrixGraph unsubscribeArc: (self at: 1) and: (self at: 2)
+GTEArc >> unsubscribeFromMatrix: aGTEAdjacencyMatrixGraph [
+	aGTEAdjacencyMatrixGraph
+		unsubscribeArc: (self at: 1)
+		and: (self at: 2)
 ]
 
 { #category : #unsubscribe }

@@ -11,6 +11,16 @@ Trait {
 }
 
 { #category : #accessing }
+TWeighted >> privateMatricialValueForNode1 [
+	^ weight
+]
+
+{ #category : #accessing }
+TWeighted >> privateMatricialValueForNode2 [
+	^ weight
+]
+
+{ #category : #accessing }
 TWeighted >> weight [
 	^ weight 
 ]

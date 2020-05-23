@@ -10,11 +10,6 @@ Class {
 }
 
 { #category : #tests }
-GTEGraphTest >> graph: aGraphClass [
-	graph := aGraphClass new 
-]
-
-{ #category : #tests }
 GTEGraphTest >> testEmptyGraphHasSize0 [
 	self assert: graph isEmpty.
 	self assert: graph size equals: 0
