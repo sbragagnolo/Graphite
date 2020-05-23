@@ -1,3 +1,6 @@
+"
+I am a matrix based graph. Abstract for defining both of my underlying flavours
+"
 Class {
 	#name : #GTEAbstractMatrixGraph,
 	#superclass : #GTEGraph,
