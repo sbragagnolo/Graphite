@@ -60,9 +60,9 @@ GTEAdjacencyMatrixGraph >> privateAddArc: i node: j into: arcs [
 	arcs
 		add:
 			(arcResolver
-				node: (GTEInnerReference offset: i)
+				node: (GTEUnBoundedReference offset: i)
 				coefficient: (matrix at: i at: j)
-				node: (GTEInnerReference offset: j)
+				node: (GTEUnBoundedReference offset: j)
 				coefficient: (matrix at: j at: i))
 ]
 

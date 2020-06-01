@@ -90,9 +90,9 @@ GTEIncidenceMatrixGraph >> privateAddArc: arcid node: i node: j into: arcs [
 	c1 := matrix at: i at: arcid.
 	c2 := matrix at: j at: arcid.
 	arcs add: (arcResolver 
-			 node: (GTEInnerReference offset: i)
+			 node: (GTEUnBoundedReference offset: i)
 			 coefficient: c1
-			 node: (GTEInnerReference offset: j)
+			 node: (GTEUnBoundedReference offset: j)
 			 coefficient: c2)
 ]
 

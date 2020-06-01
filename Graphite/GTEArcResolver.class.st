@@ -34,6 +34,11 @@ GTEArcResolver >> node: anObject coefficient: aCoefficientForNode node: anObject
 			^ GTEArc nodes: { 
 					  anObject.
 					  anObject3 } ].
+		"This case is a directed reflexive arc "
+		aCoefficientForNode = -1 ifTrue: [ 
+			^ GTEDirectedArc nodes: { 
+					  anObject.
+					  anObject3 } ].
 		self error: 'The default arc resolver does not handle weighted arcs. ' ].
 	arc := GTEDirectedArc new.
 	aCoefficientForNode = -1

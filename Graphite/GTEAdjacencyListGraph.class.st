@@ -32,11 +32,6 @@ GTEAdjacencyListGraph >> initialize [
 	arcs := Set new.
 ]
 
-{ #category : #'as yet unclassified' }
-GTEAdjacencyListGraph >> nodesEdgesDo: aBlockClosure [ 
-	self arcs do: [ :v | aBlockClosure value:v ]
-]
-
 { #category : #elements }
 GTEAdjacencyListGraph >> removeArc: aGTEArc [
 	arcs remove: aGTEArc

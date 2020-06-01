@@ -5,7 +5,7 @@ It is internal and abstract, because is not yet bounded to an specific graph.
 This manage of reference allows the graph to be built on term of positions, and being able to define the relationships in term of relative positions
 "
 Class {
-	#name : #GTEInnerReference,
+	#name : #GTEUnBoundedReference,
 	#superclass : #Object,
 	#type : #variable,
 	#traits : 'TEquality',
@@ -17,24 +17,24 @@ Class {
 }
 
 { #category : #constructor }
-GTEInnerReference class >> offset: anInteger [
+GTEUnBoundedReference class >> offset: anInteger [
 	^ self new
 		  offset: anInteger;
 		  yourself
 ]
 
 { #category : #accessing }
-GTEInnerReference >> offset [
+GTEUnBoundedReference >> offset [
 	^ offset
 ]
 
 { #category : #accessing }
-GTEInnerReference >> offset: anInteger [
+GTEUnBoundedReference >> offset: anInteger [
 	offset := anInteger
 ]
 
 { #category : #accessing }
-GTEInnerReference >> printOn: aStream [
+GTEUnBoundedReference >> printOn: aStream [
 	aStream
 		nextPutAll: 'ARef(offset=';
 		nextPutAll: offset asString;
@@ -42,6 +42,6 @@ GTEInnerReference >> printOn: aStream [
 ]
 
 { #category : #accessing }
-GTEInnerReference >> readValueFrom: aGraph [
+GTEUnBoundedReference >> readValueFrom: aGraph [
 	^ aGraph nodes at: offset
 ]

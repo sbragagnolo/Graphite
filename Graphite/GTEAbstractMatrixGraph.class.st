@@ -24,6 +24,11 @@ GTEAbstractMatrixGraph >> initialize [
 ]
 
 { #category : #initialization }
+GTEAbstractMatrixGraph >> removeArc: aGTEArc [
+	aGTEArc unsubscribeFromMatrix: self
+]
+
+{ #category : #initialization }
 GTEAbstractMatrixGraph >> useDirectedArcResolver [
 	arcResolver := GTEArcResolver resolvesArcsOfClass: GTEDirectedArc.
 ]

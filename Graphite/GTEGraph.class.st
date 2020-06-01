@@ -35,7 +35,7 @@ GTEGraph >> arcs [
 	self subclassResponsibility 
 ]
 
-{ #category : #'node operations' }
+{ #category : #iterating }
 GTEGraph >> arcsDo: aBlock [
 	^ self arcs do: aBlock
 ]
@@ -105,22 +105,41 @@ GTEGraph >> nodesFrom: aNode [
 	^ ((self arcsFrom: aNode) collect: [ :arc | arc nodeToFrom: aNode ]) asSet
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #iterating }
 GTEGraph >> nodesWithReferencesDo: aBlockClosure [ 
-	^ nodes withIndexDo: [  : n : idx | aBlockClosure value: n value:(GTEInnerReference offset: idx) ]
+	^ nodes withIndexDo: [  : n : idx | aBlockClosure value: n value:(GTEUnBoundedReference offset: idx) ]
+]
+
+{ #category : #'as yet unclassified' }
+GTEGraph >> privateDeltaOperationInstallNode: aNode atPosition: anInteger [ 
+	| newCol ref | 
+	
+	nodes size = (anInteger - 1) ifTrue:[
+		ref := self referenceTo: aNode. 
+		self assert: ref offset = anInteger.
+		^ self
+	]. 
+	nodes size < anInteger ifTrue: [ 
+		newCol := OrderedCollection new: anInteger withAll: GTEEmptySlot.
+		nodes withIndexDo: [ :each :idx | newCol at: idx put: each ].
+		nodes := newCol. 
+	 ].
+	self assert: (nodes at: anInteger) = GTEEmptySlot.
+	
+	nodes at: anInteger put: aNode. 
 ]
 
 { #category : #references }
 GTEGraph >> referenceTo: anObject [ 
 	self addNode: anObject.
-	^ GTEInnerReference offset: (nodes indexOf: anObject)
+	^ GTEUnBoundedReference offset: (nodes indexOf: anObject)
 ]
 
 { #category : #references }
 GTEGraph >> referencesTo: anObject [
 	self addNode: anObject.
 	^ (nodes selectIndex: [ :each | each = anObject ]) collect: [ :index | 
-		  GTEInnerReference offset: index ]
+		  GTEUnBoundedReference offset: index ]
 ]
 
 { #category : #'add-remove' }
@@ -130,7 +149,7 @@ GTEGraph >> removeAllNodes: aCollection [
 
 { #category : #'add-remove' }
 GTEGraph >> removeArc: aGTEArc [
-	aGTEArc unsubscribeFromMatrix: self
+	self subclassResponsibility 
 ]
 
 { #category : #'add-remove' }
