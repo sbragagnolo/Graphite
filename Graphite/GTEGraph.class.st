@@ -105,6 +105,11 @@ GTEGraph >> nodesFrom: aNode [
 	^ ((self arcsFrom: aNode) collect: [ :arc | arc nodeToFrom: aNode ]) asSet
 ]
 
+{ #category : #'as yet unclassified' }
+GTEGraph >> nodesWithReferencesDo: aBlockClosure [ 
+	^ nodes withIndexDo: [  : n : idx | aBlockClosure value: n value:(GTEInnerReference offset: idx) ]
+]
+
 { #category : #references }
 GTEGraph >> referenceTo: anObject [ 
 	self addNode: anObject.
