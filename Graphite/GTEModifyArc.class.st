@@ -11,6 +11,11 @@ Class {
 }
 
 { #category : #accessing }
+GTEModifyArc class >> operation [
+	^ 2
+]
+
+{ #category : #accessing }
 GTEModifyArc >> delegateTo: anOperator [
 	anOperator
 		deltaOperationSwapExistingArcOne: one

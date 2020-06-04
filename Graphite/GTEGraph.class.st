@@ -131,7 +131,6 @@ GTEGraph >> privateDeltaOperationInstallNode: aNode atPosition: anInteger [
 
 { #category : #references }
 GTEGraph >> referenceTo: anObject [ 
-	self addNode: anObject.
 	^ GTEUnBoundedReference offset: (nodes indexOf: anObject)
 ]
 

@@ -11,7 +11,7 @@ GTEDeltaIntrospector >> calculateArcOperationsForCreating: aGraph [
 	deltas := OrderedCollection  new.
 
 	aGraph arcsDo: [ : arc   | 
-		deltas add: (GTEAddArc new arc: arc copy; yourself ).	
+		deltas add: (GTEAddArc new one: (arc at:1 ) two: (arc at: 2 ) name: arc name ; yourself ).	
 	].
 	^ deltas .
 ]
