@@ -106,32 +106,35 @@ GTEGraph >> nodesFrom: aNode [
 ]
 
 { #category : #iterating }
-GTEGraph >> nodesWithReferencesDo: aBlockClosure [ 
-	^ nodes withIndexDo: [  : n : idx | aBlockClosure value: n value:(GTEUnBoundedReference offset: idx) ]
+GTEGraph >> nodesWithReferencesDo: aBlockClosure [
+	^ nodes
+		withIndexDo:
+			[ :n :idx | aBlockClosure value: n value: (GTEUnBoundedReference offset: idx) ]
 ]
 
 { #category : #'as yet unclassified' }
-GTEGraph >> privateDeltaOperationInstallNode: aNode atPosition: anInteger [ 
-	| newCol ref | 
-	
-	nodes size = (anInteger - 1) ifTrue:[
-		ref := self referenceTo: aNode. 
-		self assert: ref offset = anInteger.
-		^ self
-	]. 
-	nodes size < anInteger ifTrue: [ 
-		newCol := OrderedCollection new: anInteger withAll: GTEEmptySlot.
-		nodes withIndexDo: [ :each :idx | newCol at: idx put: each ].
-		nodes := newCol. 
-	 ].
+GTEGraph >> privateDeltaOperationInstallNode: aNode atPosition: anInteger [
+	| newCol ref |
+	nodes size = (anInteger - 1)
+		ifTrue: [ self addNode: aNode.
+			ref := self referenceTo: aNode.
+			self assert: ref offset = anInteger.
+			^ self ].
+	nodes size < anInteger
+		ifTrue: [ newCol := OrderedCollection new: anInteger withAll: GTEEmptySlot.
+			nodes withIndexDo: [ :each :idx | newCol at: idx put: each ].
+			nodes := newCol ].
 	self assert: (nodes at: anInteger) = GTEEmptySlot.
-	
-	nodes at: anInteger put: aNode. 
+	nodes at: anInteger put: aNode
 ]
 
 { #category : #references }
-GTEGraph >> referenceTo: anObject [ 
-	^ GTEUnBoundedReference offset: (nodes indexOf: anObject)
+GTEGraph >> referenceTo: anObject [
+	| r |
+	r := nodes indexOf: anObject.
+	^ r = 0
+		ifTrue: [ self error: 'Segmentation lolt' ]
+		ifFalse: [ GTEUnBoundedReference offset: r ]
 ]
 
 { #category : #references }

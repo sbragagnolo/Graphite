@@ -8,6 +8,23 @@ Class {
 	#category : #'Graphite-DeltaOperations'
 }
 
+{ #category : #'instance creation' }
+GTENodeOperation class >> from: aGraphArcDelta [
+	^ (self allSubclasses
+		detect: [ :a | a operation = aGraphArcDelta operation ])
+		loadFromDDSType: aGraphArcDelta
+]
+
+{ #category : #'as yet unclassified' }
+GTENodeOperation class >> loadFromDDSType: aGraphNodeDelta [
+	aGraphNodeDelta node type = #ByteSymbol
+		ifFalse: [ self halt ].
+	^ self new
+		node: aGraphNodeDelta node values asSymbol;
+		reference: (GTEUnBoundedReference new offset: aGraphNodeDelta node reference);
+		yourself
+]
+
 { #category : #applying }
 GTENodeOperation >> node [
 	^ node
