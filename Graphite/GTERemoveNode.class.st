@@ -1,3 +1,6 @@
+"
+I represent the removal of a  node from a graph
+"
 Class {
 	#name : #GTERemoveNode,
 	#superclass : #GTENodeOperation,

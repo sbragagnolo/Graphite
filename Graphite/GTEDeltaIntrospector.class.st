@@ -1,3 +1,6 @@
+"
+I can infer the operations required to create a given Graph
+"
 Class {
 	#name : #GTEDeltaIntrospector,
 	#superclass : #Object,

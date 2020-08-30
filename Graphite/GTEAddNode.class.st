@@ -1,3 +1,6 @@
+"
+I represent the addition of a new node into a graph
+"
 Class {
 	#name : #GTEAddNode,
 	#superclass : #GTENodeOperation,

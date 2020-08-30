@@ -1,3 +1,6 @@
+"
+I represent the removal of an arc
+"
 Class {
 	#name : #GTERemoveArc,
 	#superclass : #GTEArcOperation,

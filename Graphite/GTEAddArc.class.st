@@ -1,3 +1,6 @@
+"
+I represent the addition of an arc
+"
 Class {
 	#name : #GTEAddArc,
 	#superclass : #GTEArcOperation,

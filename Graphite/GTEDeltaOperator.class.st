@@ -1,3 +1,6 @@
+"
+I am in charge to interpret operations and apply them into a given graph. 
+"
 Class {
 	#name : #GTEDeltaOperator,
 	#superclass : #Object,

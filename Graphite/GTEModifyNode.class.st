@@ -1,3 +1,6 @@
+"
+I represent the modification of a  node into a graph
+"
 Class {
 	#name : #GTEModifyNode,
 	#superclass : #GTENodeOperation,

@@ -1,3 +1,6 @@
+"
+I represent Arc operations (Add/Modify/Remove)
+"
 Class {
 	#name : #GTEArcOperation,
 	#superclass : #GTEDeltaOperation,

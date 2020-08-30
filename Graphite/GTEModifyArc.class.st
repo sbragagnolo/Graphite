@@ -1,3 +1,6 @@
+"
+I represent the modification of an arc
+"
 Class {
 	#name : #GTEModifyArc,
 	#superclass : #GTEArcOperation,

@@ -1,3 +1,6 @@
+"
+I represent an abstract operation .
+"
 Class {
 	#name : #GTEDeltaOperation,
 	#superclass : #Object,

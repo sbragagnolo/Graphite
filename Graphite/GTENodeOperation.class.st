@@ -1,3 +1,6 @@
+"
+I represent an abstract node operation
+"
 Class {
 	#name : #GTENodeOperation,
 	#superclass : #GTEDeltaOperation,
