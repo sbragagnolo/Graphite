@@ -22,9 +22,9 @@ Class {
 { #category : #running }
 GTEGraphOperationsTest >> setUp [
 	super setUp.
-	a := graph referenceTo: Object new.
-	b := graph referenceTo: Object new.
-	c := graph referenceTo: Object new.
+	a := graph addAndRefer: Object new.
+	b := graph addAndRefer: Object new.
+	c := graph addAndRefer: Object new.
 	
 	"
 

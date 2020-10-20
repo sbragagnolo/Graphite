@@ -17,8 +17,9 @@ GTEGraphTest >> testEmptyGraphHasSize0 [
 
 { #category : #tests }
 GTEGraphTest >> testNeighbourWithItSelf [
+
 	| object |
-	object := graph referenceTo: Object new.
+	object := graph addAndRefer: Object new.
 	graph addArc: (GTEArc nodes: { 
 				 object.
 				 object }).
@@ -28,7 +29,7 @@ GTEGraphTest >> testNeighbourWithItSelf [
 { #category : #tests }
 GTEGraphTest >> testNeighbourWithItSelfIsAdjacent [
 	| object |
-	object := graph referenceTo: Object new.
+	object := graph addAndRefer: Object new.
 	graph addArc: (GTEArc nodes: { 
 				 object.
 				 object }).
@@ -38,18 +39,18 @@ GTEGraphTest >> testNeighbourWithItSelfIsAdjacent [
 { #category : #tests }
 GTEGraphTest >> testNeighbourWithOneOther [
 	| object |
-	object := graph referenceTo: Object new.
+	object := graph addAndRefer: Object new.
 	graph addArc: (GTEArc nodes: { 
 				 object.
-				 (graph referenceTo: Object new) }).
+				 (graph addAndRefer: Object new) }).
 	self assert: (graph neighbours: object) size equals: 1
 ]
 
 { #category : #tests }
 GTEGraphTest >> testNeighbourWithOneOtherAdjacent [
 	| object oo |
-	object := graph referenceTo: Object new.
-	oo := graph referenceTo: Object new.
+	object := graph addAndRefer: Object new.
+	oo := graph addAndRefer: Object new.
 	graph addArc: (GTEArc nodes: { 
 				 object.
 				 oo }).
@@ -59,23 +60,23 @@ GTEGraphTest >> testNeighbourWithOneOtherAdjacent [
 { #category : #tests }
 GTEGraphTest >> testNeighbourWithTwoOther [
 	| object |
-	object := graph referenceTo: Object new.
+	object := graph addAndRefer: Object new.
 
 	graph addArc: (GTEArc nodes: { 
 				 object.
-				 (graph referenceTo: Object new) }).
+				 (graph addAndRefer: Object new) }).
 	graph addArc: (GTEArc nodes: { 
 				 object.
-				 (graph referenceTo: Object new) }).
+				 (graph addAndRefer: Object new) }).
 	self assert: (graph neighbours: object) size equals: 2
 ]
 
 { #category : #tests }
 GTEGraphTest >> testNeighbourWithTwoOtherAdjacent [
 	| object oo ooo |
-	object := graph referenceTo: Object new.
-	oo := graph referenceTo: Object new.
-	ooo := graph referenceTo: Object new.
+	object := graph addAndRefer: Object new.
+	oo := graph addAndRefer: Object new.
+	ooo := graph addAndRefer: Object new.
 	graph addArc: (GTEArc nodes: { 
 				 object.
 				 oo }).
@@ -100,7 +101,7 @@ GTEGraphTest >> testNewGraphAddsANodeIsNotEmpty [
 
 { #category : #tests }
 GTEGraphTest >> testNewGraphAddsANodeReferral [
-	graph referenceTo: Object new.
+	graph addNode: Object new.
 	self assert: graph size equals: 1.
 ]
 
@@ -118,15 +119,15 @@ GTEGraphTest >> testNewGraphAddsTwiceANodeCountsAsOne [
 { #category : #tests }
 GTEGraphTest >> testNewGraphCanConnectAnObjectToASecondObjectAddingArcAndNodesAsElements [
 	graph addArc: (GTEArc nodes: { 
-				 (graph referenceTo: Object new).
-				 (graph referenceTo: Object new) }).
+				 (graph addAndRefer: Object new).
+				 (graph addAndRefer: Object new) }).
 	self assert: graph size equals: 3
 ]
 
 { #category : #tests }
 GTEGraphTest >> testNewGraphCanConnectAnObjectToItSelfAddingArcAndNodeAsElements [
 	| object |
-	object := (graph referenceTo: Object new).
+	object := (graph addAndRefer: Object new).
 	graph addArc: (GTEArc nodes: { 
 				 object.
 				 object }).
@@ -141,15 +142,15 @@ GTEGraphTest >> testNewGraphIsEmpty [
 { #category : #tests }
 GTEGraphTest >> testReferenceGeneratesSucessiveIds [
 	1 to: 1000 do: [ :i | 
-	self assert: (graph referenceTo: Object new) offset equals: i ].
+	self assert: (graph addAndRefer: Object new) offset equals: i ].
 	self assert: graph size equals: 1000
 ]
 
 { #category : #tests }
 GTEGraphTest >> testRemoveArcDoesNotRemoveNodes [
 	| arc ref1 ref2 |
-	ref1 := graph referenceTo: Object new.
-	ref2 := graph referenceTo: Object new.
+	ref1 := graph addAndRefer: Object new.
+	ref2 := graph addAndRefer: Object new.
 	arc := GTEArc nodes: { 
 			       ref1.
 			       ref2 }.
@@ -163,8 +164,8 @@ GTEGraphTest >> testRemoveArcDoesNotRemoveNodes [
 GTEGraphTest >> testRemoveArcNodesRemovesTwoNodesAndAllTheRelatedArcs [
 	| arc |
 	arc := GTEArc nodes: { 
-			       (graph referenceTo: Object new).
-			       (graph referenceTo: Object new) }.
+			       (graph addAndRefer: Object new).
+			       (graph addAndRefer: Object new) }.
 	graph addArc: arc.
 	graph removeArcNodes: arc.
 	self assert: graph size equals: 0
@@ -173,10 +174,10 @@ GTEGraphTest >> testRemoveArcNodesRemovesTwoNodesAndAllTheRelatedArcs [
 { #category : #tests }
 GTEGraphTest >> testRemoveNodeRemoveAllTheArcs [
 	| arc object |
-	object := graph referenceTo: Object new.
+	object := graph addAndRefer: Object new.
 	arc := GTEArc nodes: { 
 			       object.
-			       (graph referenceTo: Object new) }.
+			       (graph addAndRefer: Object new) }.
 	graph addArc: arc.
 	graph removeNode: object.
 	self assert: graph size equals: 1

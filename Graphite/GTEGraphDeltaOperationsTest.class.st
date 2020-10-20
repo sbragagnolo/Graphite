@@ -20,7 +20,7 @@ GTEGraphDeltaOperationsTest class >> testParameters [
 			[ GTEAdjacencyListGraph new ]};
 		forSelector: #arcKind
 			addOptions:
-			{GTEDirectedArc.
+			{GTEDirectedNamedArc.
 			GTEArc};
 		yourself
 ]
@@ -61,8 +61,8 @@ GTEGraphDeltaOperationsTest >> setupGraph [
 				addArc:
 					(arcKind new
 						nodes:
-							{(graph referenceTo: tuple first).
-							(graph referenceTo: tuple second)};
+							{(graph addAndRefer: tuple first).
+							(graph addAndRefer: tuple second)};
 						yourself) ]
 ]
 

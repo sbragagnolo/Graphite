@@ -33,14 +33,15 @@ GTEDeltaIntrospector >> calculateNodeOperationsForCreating: aGraph [
 
 { #category : #'as yet unclassified' }
 GTEDeltaIntrospector >> calculateOperationsForCreating: aGraph [
-	| deltas |
 
-	deltas := OrderedCollection  new.
-	aGraph nodesWithReferencesDo: [ : node : ref  |  
-		deltas add: (GTEAddNode new node: node; reference: ref; yourself).	
-	].
-	aGraph arcsDo: [ : arc   | 
-		deltas add: (GTEAddArc new arc: arc copy; yourself ).	
-	].
-	^ deltas .
+	| deltas |
+	deltas := OrderedCollection new.
+	aGraph nodesWithReferencesDo: [ :node :ref | 
+		deltas add: (GTEAddNode new
+				 node: node;
+				 reference: ref;
+				 yourself) ].
+	deltas addAll: (self calculateArcOperationsForCreating: aGraph).
+
+	^ deltas
 ]

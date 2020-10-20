@@ -15,6 +15,13 @@ GTEGraph >> addAllNodes: aCollection [
 	aCollection do: [ : node | self addNode: node ]
 ]
 
+{ #category : #references }
+GTEGraph >> addAndRefer: anObject [
+
+	self addNode: anObject.
+	^ self referenceTo: anObject
+]
+
 { #category : #'add-remove' }
 GTEGraph >> addArc: anArc [
 	self subclassResponsibility .
@@ -135,13 +142,6 @@ GTEGraph >> referenceTo: anObject [
 	^ r = 0
 		ifTrue: [ self error: 'Segmentation lolt' ]
 		ifFalse: [ GTEUnBoundedReference offset: r ]
-]
-
-{ #category : #references }
-GTEGraph >> referencesTo: anObject [
-	self addNode: anObject.
-	^ (nodes selectIndex: [ :each | each = anObject ]) collect: [ :index | 
-		  GTEUnBoundedReference offset: index ]
 ]
 
 { #category : #'add-remove' }
