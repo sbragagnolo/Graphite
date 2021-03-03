@@ -26,13 +26,13 @@ GTEReferenceToOne >> write: aValue to: anObject [
 		ifFound: [ :a | 
 			aValue
 				ifNil: [ anObject graph removeArc: a ]
-				ifNotNil: [ a to: (anObject graph referenceTo: aValue) ] ]
+				ifNotNil: [ a to: (anObject graph addAndRefer: aValue) ] ]
 		ifNone: [ aValue
 				ifNotNil: [ anObject graph
 						addArc:
 							(GTEDirectedNamedArc new
 								name: self name;
 								from: (anObject graph referenceTo: anObject);
-								to: (anObject graph referenceTo: aValue);
+								to: (anObject graph addAndRefer: aValue);
 								yourself) ] ]
 ]
