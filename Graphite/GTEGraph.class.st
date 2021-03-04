@@ -52,6 +52,15 @@ GTEGraph >> arcsFrom: anObject [
 	^ self subclassResponsibility 
 ]
 
+{ #category : #'as yet unclassified' }
+GTEGraph >> arcsFromObject: anObject [
+	| r |
+	r := nodes indexOf: anObject.
+	^ r = 0
+		ifTrue: [ {} ]
+		ifFalse: [ self arcsFrom: (GTEUnBoundedReference offset: r) ]
+]
+
 { #category : #accessing }
 GTEGraph >> arcsRelating: aNode with: anOtherNode [
 	^ (self arcsFrom: aNode)

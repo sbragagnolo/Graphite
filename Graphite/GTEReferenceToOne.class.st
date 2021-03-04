@@ -21,7 +21,7 @@ GTEReferenceToOne >> read: anObject [
 { #category : #'meta-object-protocol' }
 GTEReferenceToOne >> write: aValue to: anObject [
 
-	^ (anObject graph arcsFrom: (anObject graph referenceTo: anObject))
+	^ (anObject graph arcsFromObject: anObject)
 		detect: [ :a | a name = self name ]
 		ifFound: [ :a | 
 			aValue
