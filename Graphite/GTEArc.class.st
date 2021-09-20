@@ -10,8 +10,6 @@ Class {
 	#name : #GTEArc,
 	#superclass : #Object,
 	#type : #variable,
-	#traits : 'TEquality',
-	#classTraits : 'TEquality classTrait',
 	#category : #'Graphite-Core'
 }
 
@@ -41,6 +39,15 @@ GTEArc class >> nodes: anArray [
 		  yourself
 ]
 
+{ #category : #comparing }
+GTEArc >> = anObject [
+
+	self species = anObject species ifFalse: [ ^ false ].
+	((self at: 1) = (anObject at: 1) and: [ 
+		 (self at: 2) = (anObject at: 2) ]) ifFalse: [ ^ false ].
+	^ true
+]
+
 { #category : #'as yet unclassified' }
 GTEArc >> canGoSomewhereFrom: aNode [
 	| one other |
@@ -59,6 +66,12 @@ GTEArc >> copyWithReferenceShiftedBy: aNumber [
 	new at: 2 put: ((self at: 2) copy
 			 offset: (self at: 2) offset + aNumber;
 			 yourself)
+]
+
+{ #category : #comparing }
+GTEArc >> hash [
+
+	^ (self at: 1) hash bitXor: (self at: 2) hash
 ]
 
 { #category : #'as yet unclassified' }

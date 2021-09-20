@@ -9,11 +9,13 @@ Class {
 
 { #category : #'building suites' }
 GTEAbstractGraphTest class >> testParameters [
+
 	^ ParametrizedTestMatrix new
 		  forSelector: #graph addOptions: { 
-				  [GTEIncidenceMatrixGraph new ].
-				 [ GTEAdjacencyMatrixGraph new ].
-				 [ GTEAdjacencyListGraph new ]};
+				  [ GTEIncidenceMatrixGraph new ].
+				  [ GTEAdjacencyMatrixGraph new ].
+				  [ GTEAdjacencyListGraph new ].
+				  [ GTEIndexedAdjacencyListGraph new ] };
 		  yourself
 ]
 

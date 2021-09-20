@@ -25,6 +25,18 @@ GTEWeightedArc class >> node: anObject coefficient: aCoefficientForNode node: an
 ]
 
 { #category : #accessing }
+GTEWeightedArc >> = anObject [
+
+	^ super = anObject and: [ weight = anObject weight ]
+]
+
+{ #category : #accessing }
+GTEWeightedArc >> hash [
+
+	^ super hash bitXor: weight hash
+]
+
+{ #category : #accessing }
 GTEWeightedArc >> printOn: aStream [
 	aStream
 		nextPutAll: 'WArc( ';

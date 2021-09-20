@@ -12,6 +12,18 @@ Class {
 }
 
 { #category : #accessing }
+GTEDirectedNamedArc >> = anObject [
+
+	^ super = anObject and: [ name = anObject name ]
+]
+
+{ #category : #accessing }
+GTEDirectedNamedArc >> hash [
+
+	^ super hash bitXor: name hash
+]
+
+{ #category : #accessing }
 GTEDirectedNamedArc >> printOn: aStream [
 	aStream
 		nextPutAll: 'NamedArc( ';
