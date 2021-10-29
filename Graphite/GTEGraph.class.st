@@ -5,7 +5,8 @@ Class {
 	#name : #GTEGraph,
 	#superclass : #Object,
 	#instVars : [
-		'nodes'
+		'nodes',
+		'map'
 	],
 	#category : #'Graphite-Core'
 }
@@ -29,7 +30,10 @@ GTEGraph >> addArc: anArc [
 
 { #category : #'add-remove' }
 GTEGraph >> addNode: anObject [
-	(nodes includes: anObject) ifFalse: [ nodes add: anObject ]
+
+	map at: anObject ifAbsentPut: [ 
+		nodes add: anObject.
+		nodes size  ]
 ]
 
 { #category : #'node operations' }
@@ -55,16 +59,23 @@ GTEGraph >> arcsFrom: anObject [
 { #category : #'as yet unclassified' }
 GTEGraph >> arcsFromObject: anObject [
 	| r |
-	r := nodes indexOf: anObject.
-	^ r = 0
-		ifTrue: [ {} ]
-		ifFalse: [ self arcsFrom: (GTEUnBoundedReference offset: r) ]
+	r := self referenceTo: anObject .
+	^ self arcsFrom: r
 ]
 
 { #category : #accessing }
 GTEGraph >> arcsRelating: aNode with: anOtherNode [
 	^ (self arcsFrom: aNode)
 		select: [ :a | a nodes includes: anOtherNode ]
+]
+
+{ #category : #references }
+GTEGraph >> boundedReferenceTo: anObject [
+
+	^ (GTEBoundedReference offset:
+			   (map at: anObject ifAbsent: [ self error: 'Segmentation lolt' ]))
+		  origin: self;
+		  yourself
 ]
 
 { #category : #'graph operations' }
@@ -87,6 +98,7 @@ GTEGraph >> elements [
 GTEGraph >> initialize [
 	super initialize.
 	nodes := OrderedCollection new.
+	map := Dictionary new. 
 ]
 
 { #category : #testing }
@@ -97,6 +109,13 @@ GTEGraph >> isEmpty [
 { #category : #testing }
 GTEGraph >> isNotEmpty [
 	^ self nodes isNotEmpty
+]
+
+{ #category : #accessing }
+GTEGraph >> leaves [
+	"Only valid for directed arcs ."
+	^ nodes withIndexSelect: [ :n :i | 
+		  self arcs noneSatisfy: [ :arc | arc from offset = i ] ]
 ]
 
 { #category : #'node operations' }
@@ -146,11 +165,9 @@ GTEGraph >> privateDeltaOperationInstallNode: aNode atPosition: anInteger [
 
 { #category : #references }
 GTEGraph >> referenceTo: anObject [
-	| r |
-	r := nodes indexOf: anObject.
-	^ r = 0
-		ifTrue: [ self error: 'Segmentation lolt' ]
-		ifFalse: [ GTEUnBoundedReference offset: r ]
+
+	^ GTEUnBoundedReference offset:
+		  (map at: anObject ifAbsent: [ self error: 'Segmentation lolt' ])
 ]
 
 { #category : #'add-remove' }
@@ -177,6 +194,13 @@ GTEGraph >> removeArcsRelatedWith: anObject [
 GTEGraph >> removeNode: aRef [
 	self removeArcsRelatedWith: aRef.
 	nodes removeIndex: aRef offset
+]
+
+{ #category : #accessing }
+GTEGraph >> roots [
+	"Only valid for directed arcs ."
+	^ nodes withIndexSelect: [ :n :i | 
+		  self arcs noneSatisfy: [ :arc | arc to offset = i ] ]
 ]
 
 { #category : #accessing }

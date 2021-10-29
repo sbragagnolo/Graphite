@@ -35,7 +35,20 @@ GTEIndexedAdjacencyListGraph >> arcs [
 { #category : #initialization }
 GTEIndexedAdjacencyListGraph >> arcsFrom: anObject [
 
-	^ arcs at: anObject ifAbsent: [ to at: anObject ifAbsent: [ {  } ] ]
+	^ arcs at: anObject ifAbsent: [ {  } ]
+]
+
+{ #category : #'as yet unclassified' }
+GTEIndexedAdjacencyListGraph >> arcsTo: anObject [
+
+	^ to at: anObject ifAbsent: [ {  } ]
+]
+
+{ #category : #'as yet unclassified' }
+GTEIndexedAdjacencyListGraph >> arcsToObject: anObject [ 
+		| r |
+	r := self referenceTo: anObject .
+	^ self arcsTo: r
 ]
 
 { #category : #initialization }
@@ -43,6 +56,29 @@ GTEIndexedAdjacencyListGraph >> initialize [
 	super initialize .
 	arcs := Dictionary new. 
 	to := Dictionary new. 
+]
+
+{ #category : #initialization }
+GTEIndexedAdjacencyListGraph >> leaves [
+
+	"Only valid for directed arcs ."
+
+	^ nodes reject: [ :n | arcs includesKey: (self referenceTo: n) ]
+]
+
+{ #category : #'as yet unclassified' }
+GTEIndexedAdjacencyListGraph >> leavesForRelations: aFullBlockClosure [
+
+	^ nodes select: [ :n | 
+		  (self arcsToObject: n) anySatisfy: [ :rel | 
+			  aFullBlockClosure value: rel ].
+		  (self arcsFromObject: n) noneSatisfy: [ :rel | 
+			  aFullBlockClosure value: rel ] ]
+]
+
+{ #category : #'as yet unclassified' }
+GTEIndexedAdjacencyListGraph >> removeAll [ 
+	self initialize
 ]
 
 { #category : #initialization }
@@ -59,4 +95,22 @@ GTEIndexedAdjacencyListGraph >> removeArc: aGTEArc [
 GTEIndexedAdjacencyListGraph >> removeArcsRelatedWith: anObject [
 	arcs at: anObject ifPresent: [ :c | c removeAll ].
 	to at: anObject ifPresent: [ :c | c removeAll ]
+]
+
+{ #category : #initialization }
+GTEIndexedAdjacencyListGraph >> roots [
+
+	"Only valid for directed arcs ."
+
+	^ nodes reject: [ :n | to includesKey: (self referenceTo: n) ]
+]
+
+{ #category : #'as yet unclassified' }
+GTEIndexedAdjacencyListGraph >> rootsForRelations: aFullBlockClosure [
+
+	^ nodes select: [ :n | 
+		  (self arcsFromObject: n) anySatisfy: [ :rel | 
+			  aFullBlockClosure value: rel ].
+		  (self arcsToObject: n) noneSatisfy: [ :rel | 
+			  aFullBlockClosure value: rel ] ]
 ]
