@@ -17,6 +17,16 @@ GTEDirectedNamedArc >> = anObject [
 	^ super = anObject and: [ name = anObject name ]
 ]
 
+{ #category : #visiting }
+GTEDirectedNamedArc >> acceptVisitor: anAlceGraphToRoassal [
+
+	^ anAlceGraphToRoassal
+		  perform:
+		  ('visitDirectedArcNamed{1}:' format: { name capitalized })
+			  asSymbol
+		  with: self
+]
+
 { #category : #accessing }
 GTEDirectedNamedArc >> hash [
 
